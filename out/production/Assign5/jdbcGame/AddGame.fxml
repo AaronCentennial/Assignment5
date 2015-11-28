@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import jdbcGame.ControllerRoot ?>
+
+<ScrollPane fitToWidth="true" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="122.0" prefWidth="302.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jdbcGame.ControllerAddGame">
+   <content>
+      <GridPane>
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="129.0" minWidth="10.0" prefWidth="89.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="181.0" minWidth="10.0" prefWidth="181.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Add New Game" GridPane.columnSpan="2147483647">
+               <font>
+                  <Font size="20.0" />
+               </font></Text>
+            <TextField fx:id="gameText" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label text="Game Name" textAlignment="RIGHT" GridPane.rowIndex="1" />
+            <Label textAlignment="RIGHT" GridPane.rowIndex="2" />
+            <Button fx:id="gameAddBtn" mnemonicParsing="false" onAction="#gameAddBtnHandler" text="Add to DB" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" />
+            <Button mnemonicParsing="false" onAction="#cancelHandler" text="Cancel" GridPane.rowIndex="2" />
+         </children>
+      </GridPane>
+   </content>
+   <padding>
+      <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+   </padding>
+</ScrollPane>
