@@ -22,6 +22,8 @@ public class DBConfig {
 		System.err.println("Error Message: " + ex.getMessage());
 		System.err.println("Error Code: " + ex.getErrorCode());
 		System.err.println("SQL State: " + ex.getSQLState());
+
+		ex.printStackTrace();
 	}
 
 }

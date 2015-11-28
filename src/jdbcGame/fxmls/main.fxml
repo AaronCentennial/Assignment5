@@ -38,12 +38,12 @@
             </ComboBox>
             <Label text="JDBC Game Application">
                <font>
-                  <Font name="System Bold" size="28.0" />
+                  <Font name="System Bold" size="35.0" />
                </font>
             </Label>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Start by selecting an option:" GridPane.rowIndex="1">
                <font>
-                  <Font size="17.0" />
+                  <Font size="20.0" />
                </font>
             </Text>
          </children>

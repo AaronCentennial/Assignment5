@@ -14,7 +14,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 
-		Parent root = FXMLLoader.load(getClass().getResource("main.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("fxmls/main.fxml"));
 		primaryStage.setTitle("JDBC Assignment 5 - Aaron Fernandes");
 		primaryStage.setScene(new Scene(root));
 		primaryStage.show();
@@ -37,21 +37,21 @@ public class Main extends Application {
 
 			switch (fxml) {
 				case 0:
-					addplayer = FXMLLoader.load(Main.class.getResource("AddPlayer.fxml"));
+					addplayer = FXMLLoader.load(Main.class.getResource("fxmls/AddPlayer.fxml"));
 					title="Add Player";
 					break;
 				case 1:
 					//Main.setScene("fxmls/AddGame.fxml", "Add new game");
-					addplayer = FXMLLoader.load(Main.class.getResource("AddGame.fxml"));
+					addplayer = FXMLLoader.load(Main.class.getResource("fxmls/AddGame.fxml"));
 					title="Add Game";
 					break;
 				case 2:
 					//Main.setScene("fxmls/EditPlayer.fxml", "Edit Player information");
-					addplayer = FXMLLoader.load(Main.class.getResource("EditPlayer.fxml"));
-					title="Edit Game";
+					addplayer = FXMLLoader.load(Main.class.getResource("fxmls/EditPlayer.fxml"));
+					title="Edit Player";
 					break;
 				default:
-					addplayer=FXMLLoader.load(Main.class.getResource("main.fxml"));
+					addplayer=FXMLLoader.load(Main.class.getResource("fxmls/main.fxml"));
 					title="JDBC Assignment 5 - Aaron Fernandes";
 					break;
 			}

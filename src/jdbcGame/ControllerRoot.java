@@ -18,33 +18,54 @@ public class ControllerRoot {
 		Main.setScene(-1);
 	}
 
-	protected ResultSet runQuery(String q){
+	protected ResultSet runQuery(String q) throws SQLException {
+		//ResultSet resultSet = null;
+		Connection connection=null;
+		Statement statement=null;
+		ResultSet resultSet=null;
+
 		try
-			(
-					Connection connection = DBConfig.getConnection();
-					Statement statment=connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-
-			)
 		{
-			return statment.executeQuery(q);
-
-		} catch (SQLException e) {
+			connection = DBConfig.getConnection();
+			statement =connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			resultSet = statement.executeQuery(q);
+			return resultSet;
+		}
+		catch (SQLException e)
+		{
 			DBConfig.displayException(e);
 		}
+		finally {
+/*			if (resultSet!=null){
+				resultSet.close();
+			}
+
+			if (statement!=null){
+				statement.close();
+			}
+
+			if (connection!=null){
+				connection.close();
+			}*/
+		}
+
+
 		return null;
 	}
 
-	protected void insertIntoDB(String q){
+	protected boolean insertIntoDB(String q){
 		try
 		(
 			Connection connection =DBConfig.getConnection();
 			Statement statement=connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 		)
 		{
-			ResultSet r = statement.executeQuery(q);
+			statement.executeUpdate(q);
+			return true;
 		}
 		catch (SQLException e){
 			DBConfig.displayException(e);
+			return false;
 		}
 	}
 

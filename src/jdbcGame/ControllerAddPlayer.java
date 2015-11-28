@@ -24,6 +24,7 @@ public class ControllerAddPlayer extends ControllerRoot {
 
 	public void addplayerBtnHandler(ActionEvent actionEvent){
 		Alert alert=new Alert(Alert.AlertType.ERROR);
+		boolean insertSuccessful;
 		ObservableList<Node> list=addPlayerGrid.getChildren();
 		for (Node node : list) {
 			if (node instanceof TextField) {
@@ -36,10 +37,17 @@ public class ControllerAddPlayer extends ControllerRoot {
 			}
 		}
 
-		this.insertIntoDB("INSERT INTO Player VALUES ("+fNameTxt.getText()+", "+lNameTxt.getText()+", "+addressTxt.getText()+","+pCodeTxt.getText()+","+provienceTxt.getText()+","+pNumTxt.getText()+");");
-		alert.setAlertType(Alert.AlertType.INFORMATION);
-		alert.setContentText("Player added");
-		alert.showAndWait();
+		insertSuccessful = this.insertIntoDB("INSERT INTO Player (first_name, last_name, address, postal_code, province, phone_number) VALUES ('"+fNameTxt.getText()+"', '"+lNameTxt.getText()+"', '"+addressTxt.getText()+"','"+pCodeTxt.getText()+"','"+provienceTxt.getText()+"','"+pNumTxt.getText()+"');");
+		if (insertSuccessful) {
+			alert.setAlertType(Alert.AlertType.INFORMATION);
+			alert.setContentText("Player added");
+			alert.showAndWait();
+		}
+		else {
+			alert.setAlertType(Alert.AlertType.ERROR);
+			alert.setContentText("error with inserting");
+			alert.showAndWait();
+		}
 
 	}
 }
