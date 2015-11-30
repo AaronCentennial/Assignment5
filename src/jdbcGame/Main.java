@@ -41,18 +41,20 @@ public class Main extends Application {
 					title="Add Player";
 					break;
 				case 1:
-					//Main.setScene("fxmls/AddGame.fxml", "Add new game");
 					addplayer = FXMLLoader.load(Main.class.getResource("fxmls/AddGame.fxml"));
 					title="Add Game";
 					break;
 				case 2:
-					//Main.setScene("fxmls/EditPlayer.fxml", "Edit Player information");
 					addplayer = FXMLLoader.load(Main.class.getResource("fxmls/EditPlayer.fxml"));
 					title="Edit Player";
 					break;
+				case 3:
+					addplayer=FXMLLoader.load(Main.class.getResource("fxmls/EditGame.fxml"));
+					title="EditGame";
+					break;
 				default:
 					addplayer=FXMLLoader.load(Main.class.getResource("fxmls/main.fxml"));
-					title="JDBC Assignment 5 - Aaron Fernandes";
+					title="Aaron Fernandes";
 					break;
 			}
 

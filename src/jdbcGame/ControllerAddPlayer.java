@@ -26,27 +26,19 @@ public class ControllerAddPlayer extends ControllerRoot {
 		Alert alert=new Alert(Alert.AlertType.ERROR);
 		boolean insertSuccessful;
 		ObservableList<Node> list=addPlayerGrid.getChildren();
-		for (Node node : list) {
-			if (node instanceof TextField) {
-				if (((TextField) node).getText().isEmpty()) {
-					alert.setContentText("Missing info!\nYou will now be focused into that element!!");
-					alert.showAndWait();
-					node.requestFocus();
-					return;
-				}
-			}
-		}
+		boolean inputValid=this.loopNodeListForEmptyInput(list);
 
-		insertSuccessful = this.insertIntoDB("INSERT INTO Player (first_name, last_name, address, postal_code, province, phone_number) VALUES ('"+fNameTxt.getText()+"', '"+lNameTxt.getText()+"', '"+addressTxt.getText()+"','"+pCodeTxt.getText()+"','"+provienceTxt.getText()+"','"+pNumTxt.getText()+"');");
-		if (insertSuccessful) {
-			alert.setAlertType(Alert.AlertType.INFORMATION);
-			alert.setContentText("Player added");
-			alert.showAndWait();
-		}
-		else {
-			alert.setAlertType(Alert.AlertType.ERROR);
-			alert.setContentText("error with inserting");
-			alert.showAndWait();
+		if (inputValid) {
+			insertSuccessful = this.insertIntoDB("INSERT INTO Player (first_name, last_name, address, postal_code, province, phone_number) VALUES ('" + fNameTxt.getText() + "', '" + lNameTxt.getText() + "', '" + addressTxt.getText() + "','" + pCodeTxt.getText() + "','" + provienceTxt.getText() + "','" + pNumTxt.getText() + "');");
+			if (insertSuccessful) {
+				alert.setAlertType(Alert.AlertType.INFORMATION);
+				alert.setContentText("Player added");
+				alert.showAndWait();
+			} else {
+				alert.setAlertType(Alert.AlertType.ERROR);
+				alert.setContentText("error with inserting");
+				alert.showAndWait();
+			}
 		}
 
 	}

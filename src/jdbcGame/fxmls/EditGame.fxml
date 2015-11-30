@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jdbcGame.ControllerEditGame">
+   <children>
+      <ScrollPane fitToWidth="true" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="122.0" prefWidth="302.0" visible="false">
+          <content>
+              <GridPane>
+                  <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="129.0" minWidth="10.0" prefWidth="89.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="181.0" minWidth="10.0" prefWidth="181.0" />
+                  </columnConstraints>
+                  <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  </rowConstraints>
+                  <children>
+                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Edit Game" GridPane.columnSpan="2147483647">
+                          <font>
+                              <Font size="20.0" />
+                          </font>
+                  </Text>
+                      <TextField fx:id="gameText" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                      <Label text="Game Name" textAlignment="RIGHT" GridPane.rowIndex="1" />
+                      <Label textAlignment="RIGHT" GridPane.rowIndex="2" />
+                      <Button fx:id="gameSaveBtn" mnemonicParsing="false" onAction="#gameSaveBtnHandler" text="Save Game to DB" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" />
+                      <Button mnemonicParsing="false" onAction="#cancelHandler" text="Cancel" GridPane.rowIndex="2" />
+                  </children>
+              </GridPane>
+          </content>
+          <padding>
+              <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+          </padding>
+      </ScrollPane>
+      <GridPane alignment="TOP_CENTER" focusTraversable="true" prefHeight="90.0" prefWidth="302.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Select Game To Edit" GridPane.columnSpan="2">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <Label text="Select Game ID" GridPane.rowIndex="1" />
+            <ComboBox fx:id="editGameSelect" onAction="#editGameSelectHandler" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Button mnemonicParsing="false" onAction="#cancelHandler" text="Cancel" GridPane.rowIndex="2" />
+         </children>
+      </GridPane>
+   </children>
+   <padding>
+      <Insets top="15.0" />
+   </padding>
+</Pane>

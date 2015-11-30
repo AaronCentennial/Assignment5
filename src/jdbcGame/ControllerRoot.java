@@ -1,7 +1,11 @@
 package jdbcGame;
 
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.TextField;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -69,6 +73,20 @@ public class ControllerRoot {
 		}
 	}
 
+	protected boolean loopNodeListForEmptyInput(ObservableList<Node> list){
+		Alert alert=new Alert(Alert.AlertType.ERROR);
+		for(Node node : list){
+			if (node instanceof TextField){
+				if (((TextField) node).getText().isEmpty()){
+					alert.setContentText("Missing info!\nYou will now be focused into that element!!");
+					alert.showAndWait();
+					node.requestFocus();
+					return false;
+				}
+			}
+		}
+		return true;
+	}
 
 
 }

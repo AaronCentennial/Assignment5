@@ -20,7 +20,11 @@ public class ControllerAddGame extends ControllerRoot {
 			alert.showAndWait();
 		}
 		else{
-			//TODO: Insert Shit into DB
+			String gText= gameText.getText().replace("'","''");
+			this.insertIntoDB("INSERT INTO Game (game_title) VALUES ('"+ gText +"');");
+			alert.setAlertType(Alert.AlertType.INFORMATION);
+			alert.setContentText(gameText.getText()+"\nAdded as new game");
+			alert.showAndWait();
 		}
 	}
 }
