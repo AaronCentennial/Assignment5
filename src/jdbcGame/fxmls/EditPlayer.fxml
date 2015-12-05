@@ -7,7 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jdbcGame.ControllerEditPlayer">
+<Pane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jdbcGame.Controllers.ControllerEditPlayer">
    <children>
       <ScrollPane fx:id="editScrollPane" fitToWidth="true" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="285.0" prefWidth="300.0" visible="false">
          <content>
