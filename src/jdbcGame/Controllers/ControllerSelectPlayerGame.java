@@ -18,7 +18,11 @@ import jdbcGame.DBConfig;
 import jdbcGame.beans.PlayerAndGame;
 
 import java.net.URL;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -88,10 +92,21 @@ public class ControllerSelectPlayerGame extends ControllerSqlSelectPlayer implem
 	@Override
 	public void handle(Event event) {
 		if (event.getSource() instanceof ComboBox){
-			System.out.println("combo box "+((ComboBox) event.getSource()).getTooltip().getText());
+			int playerGameId =Integer.parseInt(((ComboBox) event.getSource()).getTooltip().getText());
+			int id=((ComboBox) event.getSource()).getSelectionModel().getSelectedIndex();
+
+			this.setNewGame(id+1,playerGameId);
 		}
 		else if (event.getSource() instanceof DatePicker){
-			System.out.println("date picker "+((DatePicker) event.getSource()).getTooltip().getText());
+			int id=Integer.parseInt(((DatePicker) event.getSource()).getTooltip().getText());
+			LocalDate localDatedate=((DatePicker) event.getSource()).getValue();
+			Instant instant=Instant.from(localDatedate.atStartOfDay(ZoneId.systemDefault()));
+			java.util.Date utilDate=java.util.Date.from(instant);
+
+			Date date=new Date(utilDate.getTime());
+
+			this.setNewDate(id,date);
+
 		}
 		else if (event.getSource() instanceof TextField){
 			int id=Integer.parseInt(((TextField) event.getSource()).getTooltip().getText());

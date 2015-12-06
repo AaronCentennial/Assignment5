@@ -154,4 +154,45 @@ public class ControllerSqlSelectPlayer extends ControllerRoot {
 			return false;
 		}
 	}
+
+	protected boolean setNewGame(int id, int playerGameId){
+		String sqlQuery="UPDATE PlayerAndGame SET game_id=? WHERE player_game_id=?";
+		try
+		(
+			Connection connection=DBConfig.getConnection();
+			PreparedStatement statement=connection.prepareStatement(sqlQuery)
+		)
+		{
+			statement.setInt(1,id);
+			statement.setInt(2,playerGameId);
+
+			int affectedrows=statement.executeUpdate();
+			return affectedrows==1;
+
+		}
+		catch (SQLException e){
+			DBConfig.displayException(e);
+			return false;
+		}
+	}
+
+	protected boolean setNewDate(int id, Date date){
+		String sqlQuery="UPDATE PlayerAndGame SET playing_date=? WHERE player_game_id=?";
+		try
+			(
+				Connection connection=DBConfig.getConnection();
+				PreparedStatement statement=connection.prepareStatement(sqlQuery)
+			)
+		{
+			statement.setDate(1,date);
+			statement.setInt(2, id);
+
+			return (statement.executeUpdate()) == 1;
+
+		}
+		catch (SQLException e){
+			DBConfig.displayException(e);
+			return false;
+		}
+	}
 }
