@@ -58,7 +58,7 @@
             </ScrollPane>
             <Button mnemonicParsing="false" onAction="#cancelHandler" text="Cancel" GridPane.rowIndex="4" />
             <Label fx:id="messageLabel" text="Game played by" GridPane.columnSpan="2" GridPane.rowIndex="2" />
-            <Button mnemonicParsing="false" text="Add Row" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <Button mnemonicParsing="false" onAction="#addRowHandler" text="Add Row" GridPane.columnIndex="2" GridPane.rowIndex="2" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Note: any changes will be automatically saved" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="4" />
          </children>
          <padding>

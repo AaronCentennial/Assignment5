@@ -31,6 +31,7 @@ public class ControllerSelectPlayerGame extends ControllerSqlSelectPlayer implem
 	@FXML private ComboBox<Integer> selPlayer;
 	@FXML private Label messageLabel;
 	@FXML private GridPane gameGrid;
+	private int rowCount=1;
 
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -61,7 +62,7 @@ public class ControllerSelectPlayerGame extends ControllerSqlSelectPlayer implem
 		gameGrid.add(new Label("Score"),2,0);
 
 		for (int i=0; i<playerAndGames.size();i++){
-
+			rowCount++;
 			PlayerAndGame plyAndGame=playerAndGames.get(i);
 
 			//Combo Box
@@ -87,6 +88,32 @@ public class ControllerSelectPlayerGame extends ControllerSqlSelectPlayer implem
 			gameGrid.add(textfield, 2,i+1);
 		}
 
+	}
+
+	public void addRowHandler(){
+		//Combo Box
+		ComboBox<String> gameCbx=new ComboBox<>();
+		gameCbx.setItems(FXCollections.observableArrayList(this._getGamesList()));
+		gameCbx.addEventHandler(ActionEvent.ACTION,this);
+		//gameCbx.setValue(plyAndGame.getGame_title());
+		//gameCbx.setTooltip(new Tooltip(String.format("%d", plyAndGame.getPlayer_game_id())));
+
+		//Date Picker
+		DatePicker datepicker=new DatePicker();
+		datepicker.addEventHandler(ActionEvent.ACTION,this);
+		//datepicker.setValue(plyAndGame.getPlaying_date().toLocalDate());
+		//datepicker.setTooltip(new Tooltip(String.format("%d", plyAndGame.getPlayer_game_id())));
+
+		//Text Field to set score
+		TextField textfield=new TextField();
+		textfield.addEventHandler(KeyEvent.KEY_PRESSED,this);
+		//textfield.setTooltip(new Tooltip(String.format("%d", plyAndGame.getPlayer_game_id())));
+
+		gameGrid.add(gameCbx,0,rowCount);
+		gameGrid.add(datepicker,1,rowCount);
+		gameGrid.add(textfield,2,rowCount);
+
+		rowCount++;
 	}
 
 	@Override
