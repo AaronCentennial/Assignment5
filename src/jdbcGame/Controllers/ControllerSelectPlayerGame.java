@@ -1,0 +1,103 @@
+package jdbcGame.Controllers;
+
+/*
+ * Created by Aaron Fernandes(300773526) on December 2015.
+ */
+
+import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.control.*;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.GridPane;
+import jdbcGame.DBConfig;
+import jdbcGame.beans.PlayerAndGame;
+
+import java.net.URL;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
+
+public class ControllerSelectPlayerGame extends ControllerSqlSelectPlayer implements Initializable, EventHandler<Event>{
+
+	@FXML private ComboBox<Integer> selPlayer;
+	@FXML private Label messageLabel;
+	@FXML private GridPane gameGrid;
+
+	@Override
+	public void initialize(URL url, ResourceBundle resourceBundle) {
+		selPlayer.setItems(FXCollections.observableArrayList(this._runSql()));
+	}
+
+	public void selPlayerHandler() throws SQLException {
+		int playerID=selPlayer.getSelectionModel().getSelectedItem();
+		ArrayList<PlayerAndGame> playerAndGames = this._getPlayerGamesById(playerID);
+		ArrayList<String> gameList=this._getGamesList();
+
+		// Remove event handlers :)
+		for (Node n: gameGrid.getChildren()){
+			n.removeEventHandler(ActionEvent.ACTION,this);
+			n.removeEventHandler(KeyEvent.KEY_PRESSED,this);
+		}
+		gameGrid.getChildren().clear();
+
+		try {
+			messageLabel.setText("Games played by: "+this._getNameByID(playerID));
+		} catch (SQLException e) {
+			DBConfig.displayException(e);
+		}
+
+		//Add labels
+		gameGrid.add(new Label("Game"),0,0);
+		gameGrid.add(new Label("Playing Date"),1,0);
+		gameGrid.add(new Label("Score"),2,0);
+
+		for (int i=0; i<playerAndGames.size();i++){
+
+			PlayerAndGame plyAndGame=playerAndGames.get(i);
+
+			//Combo Box
+			ComboBox<String> gameCbx=new ComboBox<>();
+			gameCbx.setItems(FXCollections.observableArrayList(gameList));
+			gameCbx.addEventHandler(ActionEvent.ACTION,this);
+			gameCbx.setValue(plyAndGame.getGame_title());
+			gameCbx.setTooltip(new Tooltip(String.format("%d", plyAndGame.getPlayer_game_id())));
+
+			//Date Picker
+			DatePicker datepicker=new DatePicker();
+			datepicker.addEventHandler(ActionEvent.ACTION,this);
+			datepicker.setValue(plyAndGame.getPlaying_date().toLocalDate());
+			datepicker.setTooltip(new Tooltip(String.format("%d", plyAndGame.getPlayer_game_id())));
+
+			//Text Field to set score
+			TextField textfield=new TextField(String.format("%d", plyAndGame.getScore()));
+			textfield.addEventHandler(KeyEvent.KEY_PRESSED,this);
+			textfield.setTooltip(new Tooltip(String.format("%d", plyAndGame.getPlayer_game_id())));
+
+			gameGrid.add(gameCbx, 0,i+1);
+			gameGrid.add(datepicker, 1,i+1);
+			gameGrid.add(textfield, 2,i+1);
+		}
+
+	}
+
+	@Override
+	public void handle(Event event) {
+		if (event.getSource() instanceof ComboBox){
+			System.out.println("combo box "+((ComboBox) event.getSource()).getTooltip().getText());
+		}
+		else if (event.getSource() instanceof DatePicker){
+			System.out.println("date picker "+((DatePicker) event.getSource()).getTooltip().getText());
+		}
+		else if (event.getSource() instanceof TextField){
+			int id=Integer.parseInt(((TextField) event.getSource()).getTooltip().getText());
+			int score=Integer.parseInt(((TextField) event.getSource()).getText());
+
+			this.setNewScore(id,score);
+		}
+	}
+}

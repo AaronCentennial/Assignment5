@@ -52,6 +52,10 @@ public class Main extends Application {
 					addplayer=FXMLLoader.load(Main.class.getResource("fxmls/EditGame.fxml"));
 					title="EditGame";
 					break;
+				case 4:
+					addplayer=FXMLLoader.load(Main.class.getResource("fxmls/SelectPlayerGame.fxml"));
+					title="Select players's games";
+					break;
 				default:
 					addplayer=FXMLLoader.load(Main.class.getResource("fxmls/main.fxml"));
 					title="Aaron Fernandes";

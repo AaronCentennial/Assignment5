@@ -28,8 +28,7 @@
                       <String fx:value="Add Game" />
                       <String fx:value="Edit Player" />
                       <String fx:value="Edit Game" />
-                      <String fx:value="View Player" />
-                      <String fx:value="View Game" />
+                      <String fx:value="Select Player's game" />
                     </FXCollections>
                 </items>
                 <value>
