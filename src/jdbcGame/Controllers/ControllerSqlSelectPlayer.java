@@ -243,11 +243,11 @@ public class ControllerSqlSelectPlayer extends ControllerRoot {
 
 	protected int _insertEmptyRow(int playerID){
 		String sqlQuery="INSERT INTO PlayerAndGame (player_id) VALUES (?)";
-		ResultSet keys=null;
+		ResultSet keys;
 		try
 			(
 				Connection connection=DBConfig.getConnection();
-				PreparedStatement statement=connection.prepareStatement(sqlQuery, Statement.RETURN_GENERATED_KEYS);
+				PreparedStatement statement=connection.prepareStatement(sqlQuery, Statement.RETURN_GENERATED_KEYS)
 			)
 		{
 			statement.setInt(1, playerID);

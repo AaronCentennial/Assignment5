@@ -1,6 +1,5 @@
 package jdbcGame.Controllers;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import jdbcGame.Main;
@@ -10,9 +9,8 @@ public class ControllerMain extends ControllerRoot{
 
 	/**
 	 * Sets the scene based on the selected index
-	 * @param actionEvent
 	 */
-	public void mainOptionHandler(ActionEvent actionEvent) {
+	public void mainOptionHandler() {
 
 		Main.setScene(mainCombo.getSelectionModel().getSelectedIndex());
 

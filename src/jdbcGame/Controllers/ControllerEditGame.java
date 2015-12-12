@@ -31,8 +31,8 @@ public class ControllerEditGame extends ControllerSqlGame implements Initializab
 	/**
 	 * Populates a dropdown list of game id's for
 	 * the user to select a game
-	 * @param url
-	 * @param resourceBundle
+	 * @param url								url of stuff
+	 * @param resourceBundle		bundle of resources
 	 */
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {

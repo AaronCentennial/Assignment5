@@ -2,7 +2,6 @@ package jdbcGame.Controllers;
 
 
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
@@ -21,7 +20,10 @@ import java.util.ArrayList;
  */
 public class ControllerRoot {
 
-	public void cancelHandler(ActionEvent actionEvent){
+	/**
+	 * Sets the Scene to default
+	 */
+	public void cancelHandler(){
 		Main.setScene(-1);
 	}
 
@@ -48,9 +50,9 @@ public class ControllerRoot {
 
 	/**
 	 * ???
-	 * @param sqlQuery
-	 * @param colName
-	 * @return
+	 * @param sqlQuery		A query statement
+	 * @param colName			The name of the column and stuff
+	 * @return						returns an Array List
 	 */
 	protected ArrayList<Integer> _runQueryHelper(String sqlQuery, String colName){
 		ArrayList<Integer> list=new ArrayList<>();

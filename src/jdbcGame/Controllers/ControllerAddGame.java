@@ -1,6 +1,5 @@
 package jdbcGame.Controllers;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
@@ -18,9 +17,8 @@ public class ControllerAddGame extends ControllerSqlGame {
 
 	/**
 	 * adds a new game
-	 * @param actionEvent
 	 */
-	public void gameAddBtnHandler(ActionEvent actionEvent){
+	public void gameAddBtnHandler(){
 		Alert alert=new Alert(Alert.AlertType.ERROR);
 		Game game=new Game();
 		if (gameText.getText().isEmpty()){

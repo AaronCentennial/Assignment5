@@ -1,6 +1,5 @@
 package jdbcGame.Controllers;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
@@ -26,9 +25,8 @@ public class ControllerAddPlayer extends ControllerSqlPlayer {
 
 	/**
 	 * Adds a new player
-	 * @param actionEvent
 	 */
-	public void addplayerBtnHandler(ActionEvent actionEvent){
+	public void addplayerBtnHandler(){
 		Alert alert=new Alert(Alert.AlertType.ERROR);
 		boolean insertSuccessful=false;
 		Player player=new Player();

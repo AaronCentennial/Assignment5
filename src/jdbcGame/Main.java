@@ -34,7 +34,7 @@ public class Main extends Application {
 	public static void setScene(int fxml) {
 		try {
 
-			Parent addplayer = null;
+			Parent addplayer;
 			String title;
 
 			switch (fxml) {
