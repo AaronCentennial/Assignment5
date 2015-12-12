@@ -33,23 +33,33 @@ public class ControllerSelectPlayerGame extends ControllerSqlSelectPlayer implem
 	@FXML private GridPane gameGrid;
 	private int rowCount=1;
 
+	/**
+	 * populates a list of games for the user to select
+	 * @param url
+	 * @param resourceBundle
+	 */
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
 		selPlayer.setItems(FXCollections.observableArrayList(this._runSql()));
 	}
 
+	/**
+	 * adds rows to the scroll Pane when a player is selected
+	 * @throws SQLException
+	 */
 	public void selPlayerHandler() throws SQLException {
 		int playerID=selPlayer.getSelectionModel().getSelectedItem();
 		ArrayList<PlayerAndGame> playerAndGames = this._getPlayerGamesById(playerID);
 		ArrayList<String> gameList=this._getGamesList();
 
-		// Remove event handlers :)
+		// Remove event handlers ☺
 		for (Node n: gameGrid.getChildren()){
 			n.removeEventHandler(ActionEvent.ACTION,this);
 			n.removeEventHandler(KeyEvent.KEY_PRESSED,this);
 		}
 		gameGrid.getChildren().clear();
 
+		//Sets the player name to a label
 		try {
 			messageLabel.setText("Games played by: "+this._getNameByID(playerID));
 		} catch (SQLException e) {
@@ -61,6 +71,7 @@ public class ControllerSelectPlayerGame extends ControllerSqlSelectPlayer implem
 		gameGrid.add(new Label("Playing Date"),1,0);
 		gameGrid.add(new Label("Score"),2,0);
 
+		//add rows
 		for (int i=0; i<playerAndGames.size();i++){
 			rowCount++;
 			PlayerAndGame plyAndGame=playerAndGames.get(i);
@@ -80,9 +91,7 @@ public class ControllerSelectPlayerGame extends ControllerSqlSelectPlayer implem
 
 			//Text Field to set score
 			TextField textfield=new TextField(String.format("%d", plyAndGame.getScore()));
-			//textfield.addEventHandler(KeyEvent.KEY_PRESSED,this);
 			textfield.addEventHandler(KeyEvent.KEY_RELEASED,this);
-			//textfield.textProperty().addListener(this);
 			textfield.setTooltip(new Tooltip(String.format("%d", plyAndGame.getPlayer_game_id())));
 
 			gameGrid.add(gameCbx, 0,i+1);
@@ -92,6 +101,9 @@ public class ControllerSelectPlayerGame extends ControllerSqlSelectPlayer implem
 
 	}
 
+	/**
+	 * Adds a new
+	 */
 	public void addRowHandler(){
 		//Combo Box
 		ComboBox<String> gameCbx=new ComboBox<>();
@@ -113,13 +125,19 @@ public class ControllerSelectPlayerGame extends ControllerSqlSelectPlayer implem
 		rowCount++;
 	}
 
+	/**
+	 * Crazy custom handler that handles all the events
+	 * @param event
+	 */
 	@Override
 	public void handle(Event event) {
+		//handle Combo Box events
 		if (event.getSource() instanceof ComboBox){
 			int playerGameId =Integer.parseInt(((ComboBox) event.getSource()).getTooltip().getText());
 			int id=((ComboBox) event.getSource()).getSelectionModel().getSelectedIndex();
 			this.setNewGame(id+1,playerGameId);
 		}
+		//handel DatePicker events
 		else if (event.getSource() instanceof DatePicker){
 			int id=Integer.parseInt(((DatePicker) event.getSource()).getTooltip().getText());
 			LocalDate localDatedate=((DatePicker) event.getSource()).getValue();
@@ -131,6 +149,7 @@ public class ControllerSelectPlayerGame extends ControllerSqlSelectPlayer implem
 			this.setNewDate(id,date);
 
 		}
+		//handle TextField events
 		else if (event.getSource() instanceof TextField){
 			int id=Integer.parseInt(((TextField) event.getSource()).getTooltip().getText());
 			int score=Integer.parseInt(((TextField) event.getSource()).getText());
@@ -139,7 +158,7 @@ public class ControllerSelectPlayerGame extends ControllerSqlSelectPlayer implem
 				System.out.println(this.setNewScore(id, score));
 			}
 
-		}
+		}//if TextField
 	}
 
 }

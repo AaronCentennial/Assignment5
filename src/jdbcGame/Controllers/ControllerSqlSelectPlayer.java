@@ -14,7 +14,10 @@ public class ControllerSqlSelectPlayer extends ControllerRoot {
 
 	protected int _playerID;
 
-	// Gets a list of player ID's
+	/**
+	 * Gets a list of player ID's
+	 * @return returns an arrayList of player ID's
+	 */
 	protected ArrayList<Integer> _runSql(){
 		ArrayList<Integer> PlayerIDs=new ArrayList<>();
 		String sqlQuery="SELECT player_id FROM Player";
@@ -41,7 +44,12 @@ public class ControllerSqlSelectPlayer extends ControllerRoot {
 
 	}
 
-	// Gets a java bean
+	/**
+	 * Get java bean of Player and Game
+	 * @param player_id			Player to return information for
+	 * @return							returns an ArrayList of jaba bean PlayerAndGame
+	 * @throws SQLException
+	 */
 	protected ArrayList<PlayerAndGame> _getPlayerGamesById(int player_id) throws SQLException {
 		String sqlQuery="SELECT player_game_id, Game.game_id, player_id, playing_date, score, game_title FROM PlayerAndGame JOIN Game ON Game.game_id=PlayerAndGame.game_id WHERE player_id=?";
 		ResultSet resultSet = null;
@@ -80,7 +88,10 @@ public class ControllerSqlSelectPlayer extends ControllerRoot {
 		}
 	}
 
-	// Gets a list of all games
+	/**
+	 * gets a list of games
+	 * @return return a list of games
+	 */
 	protected ArrayList<String> _getGamesList(){
 		ArrayList<String> games=new ArrayList<>();
 		String sqlQuery ="select game_title from Game";
@@ -102,7 +113,12 @@ public class ControllerSqlSelectPlayer extends ControllerRoot {
 
 	}
 
-	// Gets a name from a player ID
+	/**
+	 * Gets a name from a player ID
+	 * @param player_id				playerid to get games
+	 * @return								returns the name of the player based on player id
+	 * @throws SQLException
+	 */
 	protected String _getNameByID(int player_id) throws SQLException {
 		String name="";
 		String sqlQuery="SELECT first_name, last_name FROM Player WHERE player_id=?";
@@ -134,7 +150,12 @@ public class ControllerSqlSelectPlayer extends ControllerRoot {
 		return name;
 	}
 
-	// sets a new score
+	/**
+	 * Sets a new score
+	 * @param id			PlayerAndGame id
+	 * @param score		new score to set
+	 * @return				returns true if update successful
+	 */
 	protected boolean setNewScore(int id, int score){
 		String sqlQuery="UPDATE PlayerAndGame SET score=? WHERE player_game_id=?";
 		try
@@ -156,6 +177,12 @@ public class ControllerSqlSelectPlayer extends ControllerRoot {
 		}
 	}
 
+	/**
+	 * Sets a new game
+	 * @param id						Game id
+	 * @param playerGameId	PlayerAndGame id
+	 * @return							Returns true if update successful
+	 */
 	protected boolean setNewGame(int id, int playerGameId){
 		String sqlQuery="UPDATE PlayerAndGame SET game_id=? WHERE player_game_id=?";
 		try
@@ -177,6 +204,12 @@ public class ControllerSqlSelectPlayer extends ControllerRoot {
 		}
 	}
 
+	/**
+	 * Sets a new Date
+	 * @param id						PlayerAndGame id
+	 * @param date					new score to set
+	 * @return							Returns true if update successful
+	 */
 	protected boolean setNewDate(int id, Date date){
 		String sqlQuery="UPDATE PlayerAndGame SET playing_date=? WHERE player_game_id=?";
 		try

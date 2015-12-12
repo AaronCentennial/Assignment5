@@ -8,19 +8,25 @@ import java.util.ArrayList;
 
 /*
  * Created by Aaron Fernandes(300773526) on December 2015.
+ * Helper sql class
  */
 public class ControllerSqlPlayer extends ControllerRoot {
-	/*
-			Run Select query
+
+	/**
+	 *
+	 * @param playerID	Player ID in the database
+	 * @return					Returns a java bean Player from and id
+	 * @throws SQLException
 	 */
 	protected Player _runQuery(int playerID) throws SQLException {
 		String sqlQuery= "SELECT * FROM Player WHERE player_id=?";
 		ResultSet resultSet=null;
 		Player player=new Player();
-		try	(
-						 Connection connection = DBConfig.getConnection();
-						 PreparedStatement statement=connection.prepareStatement(sqlQuery)
-		)
+		try
+			(
+				 Connection connection = DBConfig.getConnection();
+				 PreparedStatement statement=connection.prepareStatement(sqlQuery)
+			)
 		{
 			statement.setInt(1,playerID);
 			resultSet=statement.executeQuery();
@@ -47,14 +53,22 @@ public class ControllerSqlPlayer extends ControllerRoot {
 		}
 	}
 
+	/**
+	 *
+	 * @return							return an ArrayList of player id's
+	 * @throws SQLException
+	 */
 	protected ArrayList<Integer> _runQuery() throws SQLException{
 		return this._runQueryHelper("SELECT * FROM Player", "player_id");
 	}
 
-	/*
-			Run Insert query
-	 */
 
+	/**
+	 * Inserts a player into the database
+	 * @param player					Player java bean
+	 * @return								returns a true if insert successful
+	 * @throws SQLException
+	 */
 	protected boolean _insertQuery(Player player) throws SQLException{
 		String sqlQuery="INSERT INTO Player (first_name, last_name, address, postal_code, province) " +
 												"VALUES (?, ?, ?, ?, ?)";
@@ -95,8 +109,12 @@ public class ControllerSqlPlayer extends ControllerRoot {
 		return true;
 	}
 
-	/*
-			Run Update query
+
+	/**
+	 * Updates a player
+	 * @param player					Player java bean
+	 * @return								returns true if update successful
+	 * @throws SQLException
 	 */
 	protected boolean _updateQuery(Player player) throws SQLException{
 		String sqlQuery="UPDATE Player SET " +
