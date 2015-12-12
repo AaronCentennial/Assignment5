@@ -31,12 +31,13 @@ public class ControllerSelectPlayerGame extends ControllerSqlSelectPlayer implem
 	@FXML private ComboBox<Integer> selPlayer;
 	@FXML private Label messageLabel;
 	@FXML private GridPane gameGrid;
-	private int rowCount=1;
+	private int _rowCount =1;
+	private int _currentPlayerId;
 
 	/**
 	 * populates a list of games for the user to select
-	 * @param url
-	 * @param resourceBundle
+	 * @param url url
+	 * @param resourceBundle resourceBundle
 	 */
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -48,8 +49,8 @@ public class ControllerSelectPlayerGame extends ControllerSqlSelectPlayer implem
 	 * @throws SQLException
 	 */
 	public void selPlayerHandler() throws SQLException {
-		int playerID=selPlayer.getSelectionModel().getSelectedItem();
-		ArrayList<PlayerAndGame> playerAndGames = this._getPlayerGamesById(playerID);
+		this._currentPlayerId=selPlayer.getSelectionModel().getSelectedItem();
+		ArrayList<PlayerAndGame> playerAndGames = this._getPlayerGamesById(this._currentPlayerId);
 		ArrayList<String> gameList=this._getGamesList();
 
 		// Remove event handlers ☺
@@ -61,7 +62,7 @@ public class ControllerSelectPlayerGame extends ControllerSqlSelectPlayer implem
 
 		//Sets the player name to a label
 		try {
-			messageLabel.setText("Games played by: "+this._getNameByID(playerID));
+			messageLabel.setText("Games played by: "+this._getNameByID(this._currentPlayerId));
 		} catch (SQLException e) {
 			DBConfig.displayException(e);
 		}
@@ -73,7 +74,7 @@ public class ControllerSelectPlayerGame extends ControllerSqlSelectPlayer implem
 
 		//add rows
 		for (int i=0; i<playerAndGames.size();i++){
-			rowCount++;
+			_rowCount++;
 			PlayerAndGame plyAndGame=playerAndGames.get(i);
 
 			//Combo Box
@@ -86,7 +87,9 @@ public class ControllerSelectPlayerGame extends ControllerSqlSelectPlayer implem
 			//Date Picker
 			DatePicker datepicker=new DatePicker();
 			datepicker.addEventHandler(ActionEvent.ACTION,this);
-			datepicker.setValue(plyAndGame.getPlaying_date().toLocalDate());
+			if (plyAndGame.getPlaying_date()!=null) {
+				datepicker.setValue(plyAndGame.getPlaying_date().toLocalDate());
+			}
 			datepicker.setTooltip(new Tooltip(String.format("%d", plyAndGame.getPlayer_game_id())));
 
 			//Text Field to set score
@@ -113,29 +116,53 @@ public class ControllerSelectPlayerGame extends ControllerSqlSelectPlayer implem
 		//Date Picker
 		DatePicker datepicker=new DatePicker();
 		datepicker.addEventHandler(ActionEvent.ACTION,this);
+		datepicker.setDisable(true);
 
 		//Text Field to set score
 		TextField textfield=new TextField();
 		textfield.addEventHandler(KeyEvent.KEY_RELEASED,this);
+		textfield.setDisable(true);
 
-		gameGrid.add(gameCbx,0,rowCount);
-		gameGrid.add(datepicker,1,rowCount);
-		gameGrid.add(textfield,2,rowCount);
+		gameGrid.add(gameCbx,0, _rowCount);
+		gameGrid.add(datepicker,1, _rowCount);
+		gameGrid.add(textfield,2, _rowCount);
 
-		rowCount++;
+		_rowCount++;
 	}
 
 	/**
 	 * Crazy custom handler that handles all the events
-	 * @param event
+	 * @param event Any event
 	 */
 	@Override
 	public void handle(Event event) {
 		//handle Combo Box events
 		if (event.getSource() instanceof ComboBox){
-			int playerGameId =Integer.parseInt(((ComboBox) event.getSource()).getTooltip().getText());
+
+			int playerGameId;
+			try {
+				playerGameId= Integer.parseInt(((ComboBox) event.getSource()).getTooltip().getText());
+			}
+			catch (NullPointerException e){
+				playerGameId=this._insertEmptyRow(this._currentPlayerId);
+
+				for (int i = 0; i < gameGrid.getChildren().size(); ++i) {
+					Node tmpNode=(gameGrid.getChildren()).get(i);
+					if (tmpNode==event.getSource()){
+						int t=i;
+						((ComboBox) tmpNode).setTooltip(new Tooltip(String.format("%d", playerGameId)));
+						tmpNode.setDisable(false);t++;
+						((DatePicker) (gameGrid.getChildren()).get(t)).setTooltip(new Tooltip(String.format("%d", playerGameId)));
+						(gameGrid.getChildren()).get(t).setDisable(false);t++;
+						((TextField) (gameGrid.getChildren()).get(t)).setTooltip(new Tooltip(String.format("%d", playerGameId)));
+						(gameGrid.getChildren()).get(t).setDisable(false);
+					}
+
+
+				}
+			}
 			int id=((ComboBox) event.getSource()).getSelectionModel().getSelectedIndex();
-			this.setNewGame(id+1,playerGameId);
+			this._setNewGame(id+1,playerGameId);
 		}
 		//handel DatePicker events
 		else if (event.getSource() instanceof DatePicker){
@@ -146,17 +173,18 @@ public class ControllerSelectPlayerGame extends ControllerSqlSelectPlayer implem
 
 			Date date=new Date(utilDate.getTime());
 
-			this.setNewDate(id,date);
+			this._setNewDate(id,date);
 
 		}
 		//handle TextField events
 		else if (event.getSource() instanceof TextField){
 			int id=Integer.parseInt(((TextField) event.getSource()).getTooltip().getText());
-			int score=Integer.parseInt(((TextField) event.getSource()).getText());
-
-			if (id!=0 || score!=0) {
-				System.out.println(this.setNewScore(id, score));
+			int score=-1;
+			if (!((TextField) event.getSource()).getText().isEmpty()) {
+				score=Integer.parseInt(((TextField) event.getSource()).getText());
 			}
+
+			this._setNewScore(id, score);
 
 		}//if TextField
 	}

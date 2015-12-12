@@ -70,8 +70,8 @@ public class ControllerSqlPlayer extends ControllerRoot {
 	 * @throws SQLException
 	 */
 	protected boolean _insertQuery(Player player) throws SQLException{
-		String sqlQuery="INSERT INTO Player (first_name, last_name, address, postal_code, province) " +
-												"VALUES (?, ?, ?, ?, ?)";
+		String sqlQuery="INSERT INTO Player (first_name, last_name, address, postal_code, province, phone_number) " +
+												"VALUES (?, ?, ?, ?, ?, ?)";
 		ResultSet keys=null;
 		try
 				(
@@ -84,6 +84,7 @@ public class ControllerSqlPlayer extends ControllerRoot {
 			statement.setString(3, player.getAddress());
 			statement.setString(4, player.getPostal_code());
 			statement.setString(5, player.getProvince());
+			statement.setString(6, player.getPhone_number());
 
 			//test number of affected rows
 			if (statement.executeUpdate()==1){

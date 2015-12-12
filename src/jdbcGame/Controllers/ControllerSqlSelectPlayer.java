@@ -12,10 +12,9 @@ import java.util.ArrayList;
 
 public class ControllerSqlSelectPlayer extends ControllerRoot {
 
-	protected int _playerID;
 
 	/**
-	 * Gets a list of player ID's
+	 * Gets a list of player ID's. Bad name for a function I know
 	 * @return returns an arrayList of player ID's
 	 */
 	protected ArrayList<Integer> _runSql(){
@@ -51,7 +50,16 @@ public class ControllerSqlSelectPlayer extends ControllerRoot {
 	 * @throws SQLException
 	 */
 	protected ArrayList<PlayerAndGame> _getPlayerGamesById(int player_id) throws SQLException {
-		String sqlQuery="SELECT player_game_id, Game.game_id, player_id, playing_date, score, game_title FROM PlayerAndGame JOIN Game ON Game.game_id=PlayerAndGame.game_id WHERE player_id=?";
+		String sqlQuery="SELECT " +
+												"player_game_id, " +
+												"Game.game_id, " +
+												"player_id, " +
+												"playing_date, " +
+												"score, " +
+												"game_title " +
+												"FROM PlayerAndGame " +
+												"LEFT JOIN Game ON Game.game_id=PlayerAndGame.game_id " +
+												"WHERE player_id=?";
 		ResultSet resultSet = null;
 		ArrayList<PlayerAndGame> playerAndGames=new ArrayList<>();
 		try
@@ -156,12 +164,12 @@ public class ControllerSqlSelectPlayer extends ControllerRoot {
 	 * @param score		new score to set
 	 * @return				returns true if update successful
 	 */
-	protected boolean setNewScore(int id, int score){
+	protected boolean _setNewScore(int id, int score){
 		String sqlQuery="UPDATE PlayerAndGame SET score=? WHERE player_game_id=?";
 		try
 			(
 				Connection connection=DBConfig.getConnection();
-				PreparedStatement statement=connection.prepareStatement(sqlQuery);
+				PreparedStatement statement=connection.prepareStatement(sqlQuery)
 			)
 		{
 			statement.setInt(1,score);
@@ -183,7 +191,7 @@ public class ControllerSqlSelectPlayer extends ControllerRoot {
 	 * @param playerGameId	PlayerAndGame id
 	 * @return							Returns true if update successful
 	 */
-	protected boolean setNewGame(int id, int playerGameId){
+	protected boolean _setNewGame(int id, int playerGameId){
 		String sqlQuery="UPDATE PlayerAndGame SET game_id=? WHERE player_game_id=?";
 		try
 		(
@@ -210,7 +218,7 @@ public class ControllerSqlSelectPlayer extends ControllerRoot {
 	 * @param date					new score to set
 	 * @return							Returns true if update successful
 	 */
-	protected boolean setNewDate(int id, Date date){
+	protected boolean _setNewDate(int id, Date date){
 		String sqlQuery="UPDATE PlayerAndGame SET playing_date=? WHERE player_game_id=?";
 		try
 			(
@@ -228,5 +236,32 @@ public class ControllerSqlSelectPlayer extends ControllerRoot {
 			DBConfig.displayException(e);
 			return false;
 		}
+	}
+
+/*	String sqlQuery="INSERT INTO Player (first_name, last_name, address, postal_code, province) " +
+											"VALUES (?, ?, ?, ?, ?)";*/
+
+	protected int _insertEmptyRow(int playerID){
+		String sqlQuery="INSERT INTO PlayerAndGame (player_id) VALUES (?)";
+		ResultSet keys=null;
+		try
+			(
+				Connection connection=DBConfig.getConnection();
+				PreparedStatement statement=connection.prepareStatement(sqlQuery, Statement.RETURN_GENERATED_KEYS);
+			)
+		{
+			statement.setInt(1, playerID);
+
+			int affected =statement.executeUpdate();
+			if (affected==1){
+				keys=statement.getGeneratedKeys();
+				keys.next();
+				return keys.getInt(1);
+			}
+		}
+		catch (SQLException e){
+			DBConfig.displayException(e);
+		}
+		return -1;
 	}
 }
