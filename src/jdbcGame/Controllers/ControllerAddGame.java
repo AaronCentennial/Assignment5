@@ -16,6 +16,10 @@ public class ControllerAddGame extends ControllerSqlGame {
 
 	@FXML private TextField gameText;
 
+	/**
+	 * adds a new game
+	 * @param actionEvent
+	 */
 	public void gameAddBtnHandler(ActionEvent actionEvent){
 		Alert alert=new Alert(Alert.AlertType.ERROR);
 		Game game=new Game();

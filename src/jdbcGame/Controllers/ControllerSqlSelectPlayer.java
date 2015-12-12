@@ -146,6 +146,7 @@ public class ControllerSqlSelectPlayer extends ControllerRoot {
 			statement.setInt(1,score);
 			statement.setInt(2, id);
 
+
 			return (statement.executeUpdate()) == 1;
 
 		}

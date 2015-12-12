@@ -26,14 +26,16 @@ public class Main extends Application {
 		launch(args);
 	}
 
-	/*
 
+	/**
+	 * Changes the scene
+	 * @param fxml int that determines the scene
 	 */
 	public static void setScene(int fxml) {
 		try {
 
 			Parent addplayer = null;
-			String title="";
+			String title;
 
 			switch (fxml) {
 				case 0:

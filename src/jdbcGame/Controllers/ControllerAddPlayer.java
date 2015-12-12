@@ -24,12 +24,18 @@ public class ControllerAddPlayer extends ControllerSqlPlayer {
 	@FXML private TextField provienceTxt;
 	@FXML private TextField pNumTxt;
 
+	/**
+	 * Adds a new player
+	 * @param actionEvent
+	 */
 	public void addplayerBtnHandler(ActionEvent actionEvent){
 		Alert alert=new Alert(Alert.AlertType.ERROR);
 		boolean insertSuccessful=false;
 		Player player=new Player();
 		boolean inputValid=this.loopNodeListForEmptyInput(addPlayerGrid.getChildren());
 
+		//If all inputs are not null then
+		//add to db
 		if (inputValid) {
 
 			player.setFirst_name(fNameTxt.getText());
@@ -53,7 +59,7 @@ public class ControllerAddPlayer extends ControllerSqlPlayer {
 				alert.setContentText("error with inserting");
 				alert.showAndWait();
 			}
-		}
+		}//if
 
-	}
+	}//addplayerBtnHandler
 }

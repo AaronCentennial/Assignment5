@@ -34,6 +34,11 @@ public class ControllerEditPlayer extends ControllerSqlPlayer implements Initial
 
 	private int _playerID;
 
+	/**
+	 * Populates a list of player id's
+	 * @param url
+	 * @param resourceBundle
+	 */
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle){
 		if (selPlayerID!=null){
@@ -48,6 +53,10 @@ public class ControllerEditPlayer extends ControllerSqlPlayer implements Initial
 		}
 	}
 
+	/**
+	 * Change Panes and lets user edit a player
+	 * @throws SQLException
+	 */
 	public void selPlayerIDHandler() throws SQLException {
 
 		try {
@@ -69,6 +78,10 @@ public class ControllerEditPlayer extends ControllerSqlPlayer implements Initial
 		this.togglePanes();
 	}
 
+	/**
+	 * Save the edited player to the db
+	 * @throws SQLException
+	 */
 	public void savePlayerBtnHandler() throws SQLException{
 		Alert alert=new Alert(Alert.AlertType.INFORMATION);
 		Player player=new Player();
@@ -92,6 +105,9 @@ public class ControllerEditPlayer extends ControllerSqlPlayer implements Initial
 		}
 	}
 
+	/**
+	 * Changes the Panes
+	 */
 	public void togglePanes(){
 		selectGridPane.setVisible(!selectGridPane.isVisible());
 		editScrollPane.setVisible(!editScrollPane.isVisible());

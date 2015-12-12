@@ -13,6 +13,7 @@ public class DBConfig {
 	private static final String USERNAME="aaron";
 	private static final String PASSWORD = "aaaaaa";
 	private static final String CONN_STRING = "jdbc:mysql://localhost/assignment5";
+	//private static final String CONN_STRING = "jdbc:mysql://aagavin.ca/yag";
 
 	public static Connection getConnection() throws SQLException {
 		return DriverManager.getConnection(CONN_STRING,USERNAME,PASSWORD);

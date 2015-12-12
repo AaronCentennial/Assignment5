@@ -80,7 +80,9 @@ public class ControllerSelectPlayerGame extends ControllerSqlSelectPlayer implem
 
 			//Text Field to set score
 			TextField textfield=new TextField(String.format("%d", plyAndGame.getScore()));
-			textfield.addEventHandler(KeyEvent.KEY_PRESSED,this);
+			//textfield.addEventHandler(KeyEvent.KEY_PRESSED,this);
+			textfield.addEventHandler(KeyEvent.KEY_RELEASED,this);
+			//textfield.textProperty().addListener(this);
 			textfield.setTooltip(new Tooltip(String.format("%d", plyAndGame.getPlayer_game_id())));
 
 			gameGrid.add(gameCbx, 0,i+1);
@@ -95,19 +97,14 @@ public class ControllerSelectPlayerGame extends ControllerSqlSelectPlayer implem
 		ComboBox<String> gameCbx=new ComboBox<>();
 		gameCbx.setItems(FXCollections.observableArrayList(this._getGamesList()));
 		gameCbx.addEventHandler(ActionEvent.ACTION,this);
-		//gameCbx.setValue(plyAndGame.getGame_title());
-		//gameCbx.setTooltip(new Tooltip(String.format("%d", plyAndGame.getPlayer_game_id())));
 
 		//Date Picker
 		DatePicker datepicker=new DatePicker();
 		datepicker.addEventHandler(ActionEvent.ACTION,this);
-		//datepicker.setValue(plyAndGame.getPlaying_date().toLocalDate());
-		//datepicker.setTooltip(new Tooltip(String.format("%d", plyAndGame.getPlayer_game_id())));
 
 		//Text Field to set score
 		TextField textfield=new TextField();
-		textfield.addEventHandler(KeyEvent.KEY_PRESSED,this);
-		//textfield.setTooltip(new Tooltip(String.format("%d", plyAndGame.getPlayer_game_id())));
+		textfield.addEventHandler(KeyEvent.KEY_RELEASED,this);
 
 		gameGrid.add(gameCbx,0,rowCount);
 		gameGrid.add(datepicker,1,rowCount);
@@ -121,7 +118,6 @@ public class ControllerSelectPlayerGame extends ControllerSqlSelectPlayer implem
 		if (event.getSource() instanceof ComboBox){
 			int playerGameId =Integer.parseInt(((ComboBox) event.getSource()).getTooltip().getText());
 			int id=((ComboBox) event.getSource()).getSelectionModel().getSelectedIndex();
-
 			this.setNewGame(id+1,playerGameId);
 		}
 		else if (event.getSource() instanceof DatePicker){
@@ -139,7 +135,11 @@ public class ControllerSelectPlayerGame extends ControllerSqlSelectPlayer implem
 			int id=Integer.parseInt(((TextField) event.getSource()).getTooltip().getText());
 			int score=Integer.parseInt(((TextField) event.getSource()).getText());
 
-			this.setNewScore(id,score);
+			if (id!=0 || score!=0) {
+				System.out.println(this.setNewScore(id, score));
+			}
+
 		}
 	}
+
 }

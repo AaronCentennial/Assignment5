@@ -25,6 +25,12 @@ public class ControllerRoot {
 		Main.setScene(-1);
 	}
 
+	/**
+	 * Loops through a list of nodes and checks if any are null
+	 * if null the user will be alerted and that element will be focused
+	 * @param list		list of nodes
+	 * @return				true if no nodes blank
+	 */
 	protected boolean loopNodeListForEmptyInput(ObservableList<Node> list){
 		Alert alert=new Alert(Alert.AlertType.ERROR);
 		for(Node node : list){
@@ -40,6 +46,12 @@ public class ControllerRoot {
 		return true;
 	}
 
+	/**
+	 * ???
+	 * @param sqlQuery
+	 * @param colName
+	 * @return
+	 */
 	protected ArrayList<Integer> _runQueryHelper(String sqlQuery, String colName){
 		ArrayList<Integer> list=new ArrayList<>();
 		try

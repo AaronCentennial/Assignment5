@@ -28,6 +28,12 @@ public class ControllerEditGame extends ControllerSqlGame implements Initializab
 
 	private int _gameID;
 
+	/**
+	 * Populates a dropdown list of game id's for
+	 * the user to select a game
+	 * @param url
+	 * @param resourceBundle
+	 */
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
 		if (editGameSelect!=null){
@@ -39,6 +45,10 @@ public class ControllerEditGame extends ControllerSqlGame implements Initializab
 		}
 	}
 
+	/**
+	 * Changes to edit mode when user selects a game
+	 * @throws SQLException
+	 */
 	public void editGameSelectHandler() throws SQLException {
 		this._gameID = editGameSelect.getSelectionModel().getSelectedItem();
 		Game game=this.runQuery(this._gameID);
@@ -47,6 +57,10 @@ public class ControllerEditGame extends ControllerSqlGame implements Initializab
 		this._togglePanes();
 	}
 
+	/**
+	 * adds a game to the db
+	 * @throws SQLException
+	 */
 	public void gameSaveBtnHandler() throws SQLException {
 		Alert alert=new Alert(Alert.AlertType.ERROR);
 		Game game=new Game();
@@ -63,6 +77,9 @@ public class ControllerEditGame extends ControllerSqlGame implements Initializab
 		}
 	}
 
+	/**
+	 * Changes the Panes when input valid
+	 */
 	private void _togglePanes(){
 		selGameGrid.setVisible(!selGameGrid.isVisible());
 		editGameScroll.setVisible(!editGameScroll.isVisible());
